@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "323620403735",
+    "project_id": "mensageiro-1151",
+    "storage_bucket": "mensageiro-1151.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323620403735:android:1a3ac0373dabe593163a52",
+        "android_client_info": {
+          "package_name": "com.rick.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323620403735-nlcq0d7scav4llks8sud75rt73solc0j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWzUDT66korLy1KlXkRZzoLz2DOCssZew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323620403735-nlcq0d7scav4llks8sud75rt73solc0j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
