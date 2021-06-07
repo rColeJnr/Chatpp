@@ -1,4 +1,4 @@
-package com.rick.chatapp.auth.fragments
+ package com.rick.chatapp.auth.fragments
 
 import android.os.Bundle
 import android.util.Log
