@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuthException
@@ -15,7 +16,10 @@ import com.rick.chatapp.auth.AuthActivity
 import com.rick.chatapp.auth.AuthActivity.Companion.isEmailValid
 import com.rick.chatapp.auth.AuthActivity.Companion.isPasswordValid
 import com.rick.chatapp.auth.AuthActivity.Companion.usersCollectionReference
+import com.rick.chatapp.chat.ui.ChatActivity
 import com.rick.chatapp.databinding.FragmentSignupBinding
+import com.rick.chatapp.util.Constants.USER
+import com.rick.chatapp.util.Constants.USERS
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -87,7 +91,9 @@ class SignUpFragment: Fragment() {
 
     private fun checkSignUpState() {
         if (firebaseAuth.currentUser != null){ // navigate to mainFragment
-            findNavController().navigate(R.id.action_signUpFragment_to_chatActivity)
+            val bundle = bundleOf(USERS to AuthActivity().requestAllUsers(),
+                USER to AuthActivity().requestCurrentUser())
+            findNavController().navigate(R.id.action_signUpFragment_to_chatActivity, bundle)
             activity?.finish()
         }
     }

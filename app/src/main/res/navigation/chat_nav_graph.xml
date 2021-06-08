@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chat_nav_graph"
+    app:startDestination="@id/listOfChatsFragment">
+
+    <fragment
+        android:id="@+id/listOfChatsFragment"
+        android:name="com.rick.chatapp.chat.ui.fragments.ListOfChatsFragment"
+        android:label="fragment_listofchats"
+        tools:layout="@layout/fragment_listofchats" >
+        <action
+            android:id="@+id/action_listOfChatsFragment_to_listOfUsersFragment"
+            app:destination="@id/listOfUsersFragment" />
+        <action
+            android:id="@+id/action_listOfChatsFragment_to_listOfUsersFragment2"
+            app:destination="@id/listOfUsersFragment" />
+        <action
+            android:id="@+id/action_listOfChatsFragment_to_privateChatFragment"
+            app:destination="@id/privateChatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listOfUsersFragment"
+        android:name="com.rick.chatapp.chat.ui.fragments.ListOfUsersFragment"
+        android:label="fragment_listofusers"
+        tools:layout="@layout/fragment_listofusers" >
+        <action
+            android:id="@+id/action_listOfUsersFragment_to_privateChatFragment"
+            app:destination="@id/privateChatFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/authActivity"
+        android:name="com.rick.chatapp.auth.AuthActivity"
+        android:label="activity_auth"
+        tools:layout="@layout/activity_auth" />
+    <fragment
+        android:id="@+id/privateChatFragment"
+        android:name="com.rick.chatapp.chat.ui.fragments.PrivateChatFragment"
+        android:label="fragment_privatechat"
+        tools:layout="@layout/fragment_privatechat" />
+</navigation>
