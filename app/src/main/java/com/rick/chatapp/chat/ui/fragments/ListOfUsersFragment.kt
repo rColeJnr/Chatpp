@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.rick.chatapp.R
+import com.rick.chatapp.auth.AuthActivity
 import com.rick.chatapp.chat.model.User
 import com.rick.chatapp.chat.ui.ChatActivity
 import com.rick.chatapp.databinding.FragmentListofusersBinding
@@ -23,12 +24,12 @@ class ListOfUsersFragment: Fragment() {
     private val binding get() = _binding!!
     private lateinit var itemBinding: ItemListofusersBinding
     // get the current user and list of users
-    private val currentUser = arguments?.getSerializable(USER) as User
-    private val listUsers = arguments?.getSerializable(USERS) as MutableList<User>
+    private val currentUser = ChatActivity.user
+    private val listUsers = ChatActivity.users
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+//        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -60,7 +61,11 @@ class ListOfUsersFragment: Fragment() {
     }
 
     inner class ListOfUsersAdapter : RecyclerView.Adapter<ListOfUsersAdapter.ListOfUsersViewHolder>() {
-        inner class ListOfUsersViewHolder(binding: ItemListofusersBinding): RecyclerView.ViewHolder(binding.root)
+        inner class ListOfUsersViewHolder(binding: ItemListofusersBinding): RecyclerView.ViewHolder(binding.root){
+            internal val profile = itemBinding.profilePic
+            internal val name = itemBinding.name
+            internal val status = itemBinding.status
+        }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListOfUsersViewHolder {
             itemBinding = ItemListofusersBinding.inflate(LayoutInflater.from(parent.context))
@@ -68,14 +73,14 @@ class ListOfUsersFragment: Fragment() {
         }
 
         override fun onBindViewHolder(holder: ListOfUsersViewHolder, position: Int) {
+            val user = listUsers[position]
             with(holder){
-                with(listUsers[position]){
-                    itemBinding.name.text = this.name
-                    itemBinding.status.text = this.status
-                    Picasso.get().load(this.profilePicture)
-                        .error(R.drawable.default_profile)
-                        .into(itemBinding.profilePic)
-                }
+                holder.name.text = user.name
+                holder.status.text = user.status
+                Picasso.get().load(user.profilePicture)
+                    .error(R.drawable.default_profile)
+                    .into(holder.profile)
+
             }
         }
 

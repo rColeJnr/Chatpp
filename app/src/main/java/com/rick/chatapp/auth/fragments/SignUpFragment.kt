@@ -91,9 +91,7 @@ class SignUpFragment: Fragment() {
 
     private fun checkSignUpState() {
         if (firebaseAuth.currentUser != null){ // navigate to mainFragment
-            val bundle = bundleOf(USERS to AuthActivity().requestAllUsers(),
-                USER to AuthActivity().requestCurrentUser())
-            findNavController().navigate(R.id.action_signUpFragment_to_chatActivity, bundle)
+            findNavController().navigate(R.id.action_signUpFragment_to_chatActivity)
             activity?.finish()
         }
     }

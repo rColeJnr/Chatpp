@@ -26,6 +26,7 @@ class AuthActivity : AppCompatActivity() {
     val firebaseAuth = FirebaseAuth.getInstance()
     var user = User()
     val listUsers = mutableListOf<User>()
+
     companion object {
         val usersCollectionReference = Firebase.firestore.collection("users")
 
@@ -49,7 +50,7 @@ class AuthActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    fun requestAllUsers(): List<User> {
+    fun requestAllUsers(): MutableList<User> {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val querySnapshot = Firebase.firestore.collection("users").get().await()
@@ -87,7 +88,4 @@ class AuthActivity : AppCompatActivity() {
         }
         return user
     }
-
-
-
 }

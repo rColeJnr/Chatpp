@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -17,6 +19,7 @@ import com.rick.chatapp.chat.ui.ChatActivity.Companion.currentUser
 import com.rick.chatapp.databinding.FragmentListofchatsBinding
 import com.rick.chatapp.databinding.ItemListofchatsBinding
 import com.rick.chatapp.util.Constants.TAGLISTCHATS
+import com.rick.chatapp.util.Constants.USER
 import com.squareup.picasso.Picasso
 
 /**
@@ -53,6 +56,12 @@ class ListOfChatsFragment : Fragment() {
         (activity as ChatActivity).supportActionBar?.title = "List of Chats"
         (activity as ChatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
+        binding.apply {
+            floatingActionButton.setOnClickListener {
+                findNavController().navigate(R.id.action_listOfChatsFragment_to_listOfUsersFragment)
+            }
+        }
+
         listenForLatestMessages()
     }
 
@@ -82,7 +91,13 @@ class ListOfChatsFragment : Fragment() {
     private inner class ListOfChatsAdapter:
         RecyclerView.Adapter<ListOfChatsAdapter.ListOfChatsViewHolder>(){
             inner class ListOfChatsViewHolder(binding: ItemListofchatsBinding):
-                RecyclerView.ViewHolder(binding.root)
+                RecyclerView.ViewHolder(binding.root){
+                    internal val name = itemBinding.name
+                    internal val message = itemBinding.message
+                    internal val profile = itemBinding.profilePic
+                    internal val mCount = itemBinding.messageCount
+                    internal val time = itemBinding.time
+                }
 
         private val listOfChatsDiffUtil = object: DiffUtil.ItemCallback<ChatListMessage>(){
             override fun areItemsTheSame(
@@ -108,19 +123,18 @@ class ListOfChatsFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: ListOfChatsViewHolder, position: Int) {
-            with(holder){
-                with(listOfChatsDiffer.currentList[position]){
-                    if (this.messageReceiverId == currentUser?.uid){
-                        itemBinding.name.text = this.nameSender
-                        Picasso.get().load(this.profilePictureSender)
-                            .error(R.drawable.default_profile)
-                            .into(itemBinding.profilePic)
-                    } else {
-                        itemBinding.name.text = this.nameReceiver
-                        Picasso.get().load(this.profilePictureReceiver)
-                            .error(R.drawable.default_profile)
-                            .into(itemBinding.profilePic)
-                    }
+            with(listOfChatsDiffer.currentList[position]){
+                holder.message.text = this.messageText
+                if (this.messageReceiverId == currentUser?.uid){
+                    holder.name.text = this.nameSender
+                    Picasso.get().load(this.profilePictureSender)
+                        .error(R.drawable.default_profile)
+                        .into(holder.profile)
+                } else {
+                    holder.name.text = this.nameReceiver
+                    Picasso.get().load(this.profilePictureReceiver)
+                        .error(R.drawable.default_profile)
+                        .into(holder.profile)
                 }
             }
         }

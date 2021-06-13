@@ -77,9 +77,7 @@ class SignInFragment: Fragment() {
 
     private fun checkSignInState() {
         if (firebaseAuth.currentUser != null){
-            val bundle = bundleOf(USERS to AuthActivity().requestAllUsers(),
-                USER to AuthActivity().requestCurrentUser())
-            findNavController().navigate(R.id.action_signInFragment_to_chatActivity, bundle)
+            findNavController().navigate(R.id.action_signInFragment_to_chatActivity)
             activity?.finish()
         }
     }
